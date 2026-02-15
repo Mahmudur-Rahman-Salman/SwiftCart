@@ -1,3 +1,7 @@
 .logoColor {
   color: #503af6;
 }
+
+.heroBackground{
+    background-image: url("../assets/ecommerce.jpg");
+}
