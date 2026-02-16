@@ -1,3 +1,19 @@
+// cart functionality
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(product) {
+  cart.push(product);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+updateCartCount();
+
 // treding products funtion
 
 const trendingProductsContainer = document.getElementById("trending-products");
@@ -63,3 +79,111 @@ async function loadTrendingProducts() {
 }
 
 loadTrendingProducts();
+
+// category products function
+
+const categoryButtons = document.getElementById("categoryButtons");
+const productGrid = document.getElementById("productGrid");
+const loading = document.getElementById("loading");
+
+const modal = document.getElementById("productModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const modalPrice = document.getElementById("modalPrice");
+const modalRating = document.getElementById("modalRating");
+
+let activeCategory = "";
+
+async function loadCategories() {
+  const res = await fetch("https://fakestoreapi.com/products/categories");
+  const categories = await res.json();
+
+  categoryButtons.innerHTML = "";
+
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.className = "btn btn-outline btn-sm capitalize";
+    button.innerText = category;
+    button.onclick = () => selectCategory(category, button);
+    categoryButtons.appendChild(button);
+
+    if (categories.length > 0) {
+      const firstCategory = categories[0];
+      const firstButton = categoryButtons.children[0];
+      selectCategory(firstCategory, firstButton);
+    }
+  });
+}
+
+// select category function
+
+async function selectCategory(category, button) {
+  activeCategory = category;
+  [...categoryButtons.children].forEach((btn) =>
+    btn.classList.remove("btn-active"),
+  );
+  button.classList.add("btn-active");
+
+  loading.classList.remove("hidden");
+  productGrid.innerHTML = "";
+
+  const res = await fetch(
+    `https://fakestoreapi.com/products/category/${category}`,
+  );
+  const products = await res.json();
+
+  loading.classList.add("hidden");
+  renderProducts(products);
+}
+
+/* -------------------- RENDER PRODUCTS -------------------- */
+function renderProducts(products) {
+  products.forEach((product) => {
+    const card = document.createElement("div");
+    card.className = "card bg-base-100 shadow";
+
+    card.innerHTML = `
+      <figure class="p-4 h-48">
+        <img src="${product.image}" class="object-contain h-full" />
+      </figure>
+
+      <div class="card-body">
+        <h2 class="text-sm font-semibold">
+          ${product.title.slice(0, 40)}...
+        </h2>
+
+        <span class="badge badge-outline capitalize">
+          ${product.category}
+        </span>
+
+        <p class="font-bold">$${product.price}</p>
+        <p class="text-sm">⭐ ${product.rating.rate}</p>
+
+        <div class="card-actions justify-between mt-2">
+          <button class="btn btn-sm btn-outline" onclick="openModal(${product.id})">
+            Details
+          </button>
+          <button class="btn btn-sm btn-primary" onclick='addToCart(${JSON.stringify(product)})'>Add To Cart</button>
+        </div>
+      </div>
+    `;
+
+    productGrid.appendChild(card);
+  });
+}
+
+/* -------------------- MODAL -------------------- */
+async function openModal(id) {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+  const product = await res.json();
+
+  modalTitle.innerText = product.title;
+  modalDesc.innerText = product.description;
+  modalPrice.innerText = `$${product.price}`;
+  modalRating.innerText = `⭐ ${product.rating.rate}`;
+
+  modal.showModal();
+}
+
+/* INIT */
+loadCategories();
