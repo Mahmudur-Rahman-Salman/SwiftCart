@@ -6,6 +6,7 @@ function addToCart(product) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
+  showCartAlert();
 }
 
 function updateCartCount() {
@@ -53,7 +54,18 @@ function removeFromCart(index) {
   openCart(); // re-render cart
 }
 
-// treding products funtion
+// alert functionality
+function showCartAlert() {
+  const alertBox = document.getElementById("cartAlert");
+
+  alertBox.classList.remove("hidden");
+
+  setTimeout(() => {
+    alertBox.classList.add("hidden");
+  }, 2000); // 2 seconds
+}
+
+// trending products funtion
 
 const trendingProductsContainer = document.getElementById("trending-products");
 
