@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SwiftCraft Products</title>
+    <!-- css -->
+    <link rel="stylesheet" href="style/style.css" />
+    <!-- Daisy Ui -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+     <!-- Navbar start-->
+    <header class="bg-base-100 shadow-sm">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="navbar">
+          <!-- (mobile menu) -->
+          <div class="navbar-start gap-2">
+            <div class="dropdown lg:hidden">
+              <label tabindex="0" class="btn btn-ghost btn-circle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h7"
+                  />
+                </svg>
+              </label>
+
+              <ul
+                tabindex="0"
+                class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li><a>Home</a></li>
+                <li><a>Products</a></li>
+                <li><a>About</a></li>
+                <li><a>Contact</a></li>
+              </ul>
+            </div>
+
+            <!-- Logo -->
+            <a href="/" class="btn btn-ghost text-2xl font-bold logoColor">
+              SwiftCart
+            </a>
+          </div>
+
+          <!--<Menu (desktop only) -->
+          <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal gap-6 font-medium">
+              <li><a href="/">Home</a></li>
+              <li><a>Products</a></li>
+              <li><a>About</a></li>
+              <li><a>Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Cart -->
+          <div class="navbar-end">
+            <button onclick="openCart()" class="btn btn-ghost btn-circle">
+              <div class="indicator">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <span id="cartCount" class="badge badge-sm indicator-item"
+                  >8</span
+                >
+              </div>
+            </buttono>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- navbar end -->
+
+     <section class="max-w-7xl mx-auto px-6 py-12">
+      <h2 class="text-3xl font-bold mb-6">All Products</h2>
+
+      <!-- Categories -->
+      <div id="categoryButtons" class="flex flex-wrap gap-3 mb-10"></div>
+
+      <!-- Loading -->
+      <div id="loading" class="hidden text-center py-10">
+        <span class="loading loading-spinner loading-lg"></span>
+      </div>
+
+      <!-- Products Grid -->
+      <div
+        id="productGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      ></div>
+    </section>
+
+     <!-- Footer -->
+    <footer class="bg-base-100 border-t border-base-200">
+      <div class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Brand -->
+          <div>
+            <h3 class="text-xl font-bold mb-3">SwiftCart</h3>
+            <p class="text-sm text-base-content/70">
+              Your trusted online store for quality products at the best prices.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="font-semibold mb-3">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a class="hover:text-primary cursor-pointer">Home</a></li>
+              <li><a class="hover:text-primary cursor-pointer">Products</a></li>
+              <li><a class="hover:text-primary cursor-pointer">About</a></li>
+              <li><a class="hover:text-primary cursor-pointer">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Support -->
+          <div>
+            <h4 class="font-semibold mb-3">Support</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a class="hover:text-primary cursor-pointer">FAQs</a></li>
+              <li><a class="hover:text-primary cursor-pointer">Shipping</a></li>
+              <li><a class="hover:text-primary cursor-pointer">Returns</a></li>
+              <li>
+                <a class="hover:text-primary cursor-pointer">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Social -->
+          <div>
+            <h4 class="font-semibold mb-3">Follow Us</h4>
+            <div class="flex gap-4">
+              <a class="hover:text-primary cursor-pointer">
+                <!-- Facebook -->
+                <img
+                  src="./assets/facebook-logo.png"
+                  alt="facebook"
+                  class="w-8 h-8"
+                />
+              </a>
+
+              <a class="hover:text-primary cursor-pointer">
+                <!-- Twitter -->
+                <img src="./assets/twitter.png" alt="twitter" class="w-8 h-8" />
+              </a>
+              <a class="hover:text-primary cursor-pointer">
+                <!-- Instagram -->
+                <img
+                  src="./assets/instagram.png"
+                  alt="instagram"
+                  class="w-8 h-8"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div
+          class="mt-10 border-t border-base-200 pt-6 text-center text-sm text-base-content/60"
+        >
+          © 2026 SwiftCart. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
