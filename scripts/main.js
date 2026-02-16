@@ -65,6 +65,8 @@ function showCartAlert() {
   }, 2000); // 2 seconds
 }
 
+
+
 // trending products funtion
 
 const trendingProductsContainer = document.getElementById("trending-products");
