@@ -4,6 +4,13 @@ const trendingProductsContainer = document.getElementById("trending-products");
 
 async function loadTrendingProducts() {
   try {
+    trendingProductsContainer.innerHTML = `
+          <div class="col-span-full flex justify-center py-12">
+            <span
+              class="loading loading-spinner loading-lg text-primary"
+            ></span>
+          </div>`;
+
     const response = await fetch("https://fakestoreapi.com/products");
 
     if (!response.ok) {
@@ -11,6 +18,8 @@ async function loadTrendingProducts() {
     }
 
     const products = await response.json();
+
+    trendingProductsContainer.innerHTML = "";
 
     const topRated = products
       .sort((a, b) => b.rating.rate - a.rating.rate)
