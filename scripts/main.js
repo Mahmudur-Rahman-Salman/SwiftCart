@@ -14,6 +14,45 @@ function updateCartCount() {
 
 updateCartCount();
 
+function openCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartTotal = document.getElementById("cartTotal");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    cartItems.innerHTML += `
+      <div class="flex justify-between items-center border-b pb-2">
+        <div>
+          <p class="text-sm font-semibold">${item.title.slice(0, 30)}</p>
+          <p class="text-sm">$${item.price}</p>
+        </div>
+
+        <button 
+          class="btn btn-xs btn-error"
+          onclick="removeFromCart(${index})"
+        >
+          ✕
+        </button>
+      </div>
+    `;
+  });
+
+  cartTotal.innerText = total.toFixed(2);
+  cartModal.showModal();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+  openCart(); // re-render cart
+}
+
 // treding products funtion
 
 const trendingProductsContainer = document.getElementById("trending-products");
@@ -64,10 +103,6 @@ async function loadTrendingProducts() {
               ⭐ ${product.rating.rate}
             </span>
           </div>
-
-          <button class="btn btn-primary btn-sm w-full">
-            Add to Cart
-          </button>
             `;
       trendingProductsContainer.appendChild(productCard);
     });
